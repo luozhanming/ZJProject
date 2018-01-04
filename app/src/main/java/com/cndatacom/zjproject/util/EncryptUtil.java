@@ -13,19 +13,48 @@ import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtil {
 
+
+    // 数组
+    private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+
     public static String EncryptMD5(String input) {
-        MessageDigest md5 = null;
-        String result = null;
+        String resultString = null;
+
         try {
-            md5 = MessageDigest.getInstance("MD5");
-            byte[] bytes = input.getBytes("utf-8");
-            byte[] base64 = Base64.encode(bytes, Base64.DEFAULT);
-            result = new String(md5.digest(base64),"utf-8");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            resultString = new String(input);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            resultString = byteArrayToHexString(md.digest(resultString
+                    .getBytes()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return result;
+        return resultString;
+
     }
+
+    /**
+     * 转换字节数组为16进制字串
+     *
+     * @param b
+     *            字节数组
+     * @return 16进制字串
+     */
+    public static String byteArrayToHexString(byte[] b) {
+        StringBuffer resultSb = new StringBuffer();
+        for (int i = 0; i < b.length; i++) {
+            resultSb.append(byteToHexString(b[i]));
+        }
+        return resultSb.toString();
+    }
+
+    private static String byteToHexString(byte b) {
+        int n = b;
+        if (n < 0)
+            n = 256 + n;
+        int d1 = n / 16;
+        int d2 = n % 16;
+        return hexDigits[d1] + hexDigits[d2];
+    }
+
 }

@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 /**
+ * Glide圆形图片转换
  * Created by cdc4512 on 2018/1/3.
  */
 
@@ -36,8 +37,8 @@ public class CircleBitmapTransformation extends BitmapTransformation {
         paint.setAntiAlias(true);
         BitmapShader shader = new BitmapShader(toTransform, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         paint.setShader(shader);
-        float radius = Math.min(outWidth / 2, outHeight / 2);
-        canvas.drawCircle(outWidth / 2, outHeight / 2, radius, paint);
+        float radius = Math.min(toTransform.getWidth() / 2, toTransform.getHeight() / 2);
+        canvas.drawCircle(toTransform.getWidth()  / 2, toTransform.getHeight() / 2, radius, paint);
         return bitmap;
     }
 

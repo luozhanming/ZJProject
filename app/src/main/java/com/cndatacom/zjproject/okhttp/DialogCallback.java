@@ -2,8 +2,6 @@ package com.cndatacom.zjproject.okhttp;
 
 import android.content.Context;
 
-import com.lkk.tyj.util.DialogUtils;
-
 import java.io.IOException;
 
 import okhttp3.Response;
@@ -25,6 +23,6 @@ public abstract class DialogCallback extends Callback<String>
     @Override
     public void onAfter(int id) {
         super.onAfter(id);
-        DialogUtils.hideProgressDialog();
+    //    DialogUtils.hideProgressDialog();
     }
 }

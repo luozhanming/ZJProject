@@ -1,6 +1,7 @@
 package com.cndatacom.zjproject.ui.contract;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.cndatacom.zjproject.R;
 
 /**
@@ -34,6 +36,11 @@ public class ContractMainFragment extends Fragment {
             }
         }
         return sInstance;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable

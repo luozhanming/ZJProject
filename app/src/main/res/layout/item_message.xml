@@ -2,21 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:paddingLeft="16dp"
+    android:paddingLeft="10dp"
     android:paddingTop="10dp">
 
     <ImageView
-
         android:id="@+id/picture"
-        android:layout_width="45dp"
-        android:layout_height="45dp" />
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/fromUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="14dp"
         android:layout_toEndOf="@+id/picture"
         android:layout_toRightOf="@+id/picture"
         android:text="fromUser"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/fromUser"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="9dp"
         android:layout_toEndOf="@+id/fromUser"
         android:layout_toRightOf="@+id/fromUser"
         android:background="@drawable/bg_rounded1"
@@ -47,7 +47,7 @@
         android:layout_alignLeft="@+id/fromUser"
         android:layout_alignStart="@+id/fromUser"
         android:text="message"
-        android:textSize="@dimen/textSize12" />
+        android:textSize="@dimen/textSize14" />
 
     <TextView
         android:id="@+id/time"
@@ -58,7 +58,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:text="time"
-        android:textSize="@dimen/textSize12" />
+        android:textSize="@dimen/textSize14" />
 
     <View
         android:layout_width="match_parent"

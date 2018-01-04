@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#C6161D</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackgroud">#F4F4F4</color>
-    <color name="colorBottomNavigation">#F7F7F8</color>
+    <color name="colorBottomNavigation">#F2F2F2</color>
     <color name="colorLine">#AAAAAA</color>
     <color name="white">#FFFFFF</color>
 </resources>
