@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="@color/colorPrimary"
-                        android:text="11"
+                        android:text="0"
                         android:layout_gravity="center"
                         android:id="@+id/tv_backlog"
                         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="@color/colorPrimary"
-                        android:text="11"
+                        android:text="0"
                         android:layout_gravity="center"
                         android:id="@+id/tv_readLater"
                         android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="#000000"
-                        android:text="11"
+                        android:text="0"
                         android:layout_gravity="center"
                         android:id="@+id/tv_done"
                         android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="#000000"
-                        android:text="11"
+                        android:text="0"
                         android:layout_gravity="center"
                         android:id="@+id/tv_haveRead"
                         android:layout_width="wrap_content"

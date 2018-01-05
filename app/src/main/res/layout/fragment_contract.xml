@@ -3,4 +3,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_size">
+
+        <TextView
+            android:layout_marginLeft="17dp"
+            android:text="联系人"
+            android:textColor="@color/white"
+            android:layout_gravity="left|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize16"/>
+        <ImageView
+            android:src="@mipmap/ic_search"
+            android:id="@+id/iv_search"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="right|center_vertical"/>
+    </FrameLayout>
+
 </LinearLayout>
