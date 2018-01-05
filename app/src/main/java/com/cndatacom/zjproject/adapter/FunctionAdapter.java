@@ -1,19 +1,29 @@
 package com.cndatacom.zjproject.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.entry.FunctionEntry;
 import com.cndatacom.zjproject.ui.common.WebActivity;
+import com.cndatacom.zjproject.util.DownloadUtil;
+import com.cndatacom.zjproject.widget.CommonDialog;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -51,15 +61,15 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
                 @Override
                 public void onClick(View v) {
                     String name = functions.get(pos).getName();
-                    switch (name){
+                    switch (name) {
                         case "OA审批":
-                            Toast.makeText(mContext,"OA审批",Toast.LENGTH_SHORT).show();
+                            toOAApp();
                             break;
                         case "云办事":
-                            Toast.makeText(mContext,"云办事",Toast.LENGTH_SHORT).show();
+                            WebActivity.start(mContext, "云办事", "http://tbsmhgl.zjportal.net:8096/portal/sys/main!client.action?weixinFlag=true");
                             break;
                         case "云订餐":
-                            WebActivity.start(mContext,"云订餐","http://ydctest.zjportal.net/html5/sys/login/login.action");
+                            WebActivity.start(mContext, "云订餐", "http://ydctest.zjportal.net/html5/sys/login/login.action");
                             break;
                     }
                 }
@@ -68,17 +78,53 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
 
     }
 
+    private void toOAApp() {
+        if (AppUtils.isInstallApp("cn.com.do1.zjoa")) {
+            AppUtils.launchApp("cn.com.do1.zjoa");
+        } else {
+            showIfInstallApk();
+        }
+    }
+
+    private void showIfInstallApk() {
+        CommonDialog dialog = new CommonDialog(mContext);
+        dialog.setContent("是否安装OA应用？");
+        dialog.setPositiveButton("确定", new CommonDialog.CommonDialogInterface() {
+            @Override
+            public boolean onClick() {
+                String apkPath = mContext.getExternalFilesDir(null).getPath() + "/Download/oa.apk";
+                if (FileUtils.isFileExists(apkPath)) {
+                    AppUtils.installApp(apkPath, "com.cndatacom.zjproject.fileprovider");
+                } else {
+                    long id = DownloadUtil.downloadApk(mContext, "http://exp.zjportal.net/ICTFS/fileDownload.aspx?FileStoragePath=\\DocumentInfo\\34e17a46ed7c401d88870900c861d89d.apk&FileName=%E6%B9%9B%E6%B1%9F%E6%AD%A3%E5%BC%8F%E7%8E%AF%E5%A2%8320170815_530_jiagu_sign.apk",
+                            "oa.apk", "下载OA", "");
+                    SPUtils.getInstance().put("downloadId", id);
+                }
+                return true;
+            }
+        });
+        dialog.setNegativeButton("取消", new CommonDialog.CommonDialogInterface() {
+            @Override
+            public boolean onClick() {
+                return false;
+            }
+        });
+        dialog.show();
+
+    }
+
+
     @Override
     public int getItemCount() {
         return functions.size() + 1;
     }
 
-    public void addFunction(FunctionEntry function){
+    public void addFunction(FunctionEntry function) {
         functions.add(function);
         notifyDataSetChanged();
     }
 
-    public void addFunctions(List<FunctionEntry> datas){
+    public void addFunctions(List<FunctionEntry> datas) {
         functions.clear();
         functions.addAll(datas);
         notifyDataSetChanged();

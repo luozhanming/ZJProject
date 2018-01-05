@@ -62,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (ActivityUtils.getActivityList().size() == 1) {
             if (!canExit) {
-                showShortToast("是否退出应用");
+                showShortToast("再按一下退出应用");
                 canExit = true;
                 Observable.timer(2000, TimeUnit.MILLISECONDS)
                         .subscribe(new Consumer<Long>() {

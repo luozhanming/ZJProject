@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     showShortToast("请输入密码");
                     return;
                 }
-                login(username, password);
+                login(username, EncryptUtil.EncryptMD5(password));
                 break;
         }
     }
@@ -140,7 +140,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void login(String username, String password) {
         LoadingDialog.showLoadingDialog(this, "登录中");
-        MyRetrofit.getHttpService().login(username, EncryptUtil.EncryptMD5(password))
+        MyRetrofit.getHttpService().login(username, password)
                 .enqueue(new Callback<UserInfoEntry>() {
                     @Override
                     public void onResponse(Call<UserInfoEntry> call, Response<UserInfoEntry> response) {

@@ -77,23 +77,25 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         webSettings.setDomStorageEnabled(true);//DOM Storage
         webSettings.setUseWideViewPort(true);// 加载进来的页面自适应手机屏幕
         webSettings.setLoadWithOverviewMode(true); //和setUseWideViewPort(true)一起解决网页自适应问题
-        // 适应屏幕大小
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int mDensity = metrics.densityDpi;
-        if (mDensity == 240) {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        } else if (mDensity == 160) {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-        } else if (mDensity == 120) {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
-        } else if (mDensity == DisplayMetrics.DENSITY_XHIGH) {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        } else if (mDensity == DisplayMetrics.DENSITY_TV) {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        } else {
-            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-        }
+//        // 适应屏幕大小
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        int mDensity = metrics.densityDpi;
+//        if (mDensity == 240) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        } else if (mDensity == 160) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+//        } else if (mDensity == 120) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+//        } else if (mDensity == DisplayMetrics.DENSITY_XHIGH) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        } else if (mDensity == DisplayMetrics.DENSITY_TV) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        } else {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+//        }
+        webView.setWebChromeClient(new MyWebChromeClient());
+        webView.setWebViewClient(new MyWebViewClient());
     }
 
     @Override
@@ -110,6 +112,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
      */
     private class MyWebViewClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
             return true;
         }
 
