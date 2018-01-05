@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.entry.FunctionEntry;
+import com.cndatacom.zjproject.ui.common.WebActivity;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
         final int pos = position;
         if (position == functions.size()) {
             holder.name.setVisibility(View.GONE);
-            holder.icon.setImageResource(R.mipmap.ic_launcher_round);
+            holder.icon.setImageResource(R.mipmap.add);
         } else {
             holder.name.setVisibility(View.VISIBLE);
             holder.name.setText(functions.get(position).getName());
@@ -57,7 +59,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
                             Toast.makeText(mContext,"云办事",Toast.LENGTH_SHORT).show();
                             break;
                         case "云订餐":
-                            Toast.makeText(mContext,"云订餐",Toast.LENGTH_SHORT).show();
+                            WebActivity.start(mContext,"云订餐","http://ydctest.zjportal.net/html5/sys/login/login.action");
                             break;
                     }
                 }

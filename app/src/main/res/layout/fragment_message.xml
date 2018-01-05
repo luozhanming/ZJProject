@@ -7,9 +7,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_size">
         <ImageView
+            android:tint="#73fafc"
+            android:src="@mipmap/ic_search"
             android:id="@+id/iv_search"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginRight="16dp"
             android:layout_gravity="right|center_vertical"/>
     </FrameLayout>

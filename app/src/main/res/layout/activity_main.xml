@@ -28,10 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomNavigation_size"
         android:layout_gravity="bottom"
+        android:paddingTop="5dp"
         android:background="@color/colorBottomNavigation"
         android:orientation="horizontal">
 
         <RadioButton
+            android:drawableTop="@drawable/selector_msg"
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -47,6 +49,7 @@
             android:id="@+id/work"
             android:layout_width="0dp"
             android:text="@string/work"
+            android:drawableTop="@drawable/selector_work"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
@@ -56,6 +59,7 @@
             android:gravity="center" />
 
         <RadioButton
+            android:drawableTop="@drawable/selector_contract"
             android:id="@+id/contract"
             android:layout_width="0dp"
             android:textColor="@drawable/selector_color_navigation"
@@ -68,6 +72,7 @@
             android:gravity="center" />
 
         <RadioButton
+            android:drawableTop="@drawable/selector_mine"
             android:id="@+id/mine"
             android:layout_width="0dp"
             android:layout_height="match_parent"

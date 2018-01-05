@@ -47,6 +47,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private void initView() {
         rgBottomNavigation = (RadioGroup) findViewById(R.id.rg_bottomNavigation);
         rgBottomNavigation.setOnCheckedChangeListener(this);
+
+        rgBottomNavigation.check(R.id.work);
     }
 
     private void initData() {

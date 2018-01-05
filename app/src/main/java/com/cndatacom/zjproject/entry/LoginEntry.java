@@ -1,5 +1,8 @@
 package com.cndatacom.zjproject.entry;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.cndatacom.zjproject.util.EncryptUtil;
+
 /**
  * 登录信息
  * Created by luozhanming on 2018/1/3.
@@ -38,5 +41,17 @@ public class LoginEntry {
 
     public void setUserInfo(UserInfoEntry userInfo) {
         this.userInfo = userInfo;
+        if(this.userInfo!=null){
+            setLogin(true);
+            SPUtils.getInstance().put("username",userInfo.getUser().getLogonId());
+            SPUtils.getInstance().put("password",userInfo.getUser().getPassword());
+        }
+    }
+
+    public void logout(){
+        setUserInfo(null);
+        setLogin(false);
+        SPUtils.getInstance().put("username","");
+        SPUtils.getInstance().put("password","");
     }
 }
