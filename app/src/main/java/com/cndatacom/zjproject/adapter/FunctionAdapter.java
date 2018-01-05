@@ -1,18 +1,12 @@
 package com.cndatacom.zjproject.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.FileUtils;
@@ -23,7 +17,6 @@ import com.cndatacom.zjproject.ui.common.WebActivity;
 import com.cndatacom.zjproject.util.DownloadUtil;
 import com.cndatacom.zjproject.widget.CommonDialog;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -86,6 +79,9 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
         }
     }
 
+    /**
+     * 询问安装OA对话框
+     * */
     private void showIfInstallApk() {
         CommonDialog dialog = new CommonDialog(mContext);
         dialog.setContent("是否安装OA应用？");

@@ -15,9 +15,15 @@ public class EncryptUtil {
 
 
     // 数组
-    private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+    private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
+    /**
+     * MD5加密
+     *
+     * @param input 输入
+     * @return 输出
+     */
     public static String EncryptMD5(String input) {
         String resultString = null;
 
@@ -36,8 +42,7 @@ public class EncryptUtil {
     /**
      * 转换字节数组为16进制字串
      *
-     * @param b
-     *            字节数组
+     * @param b 字节数组
      * @return 16进制字串
      */
     public static String byteArrayToHexString(byte[] b) {

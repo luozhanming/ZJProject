@@ -11,6 +11,16 @@ import android.os.Environment;
 
 public class DownloadUtil {
 
+
+    /**
+     * 下载apk
+     *
+     * @param context
+     * @param uri         apk下载地址
+     * @param dstFile     apk下载后的文件名
+     * @param title       下载标题
+     * @param description 下载描述
+     */
     public static long downloadApk(Context context, String uri
             , String dstFile, String title
             , String description) {
