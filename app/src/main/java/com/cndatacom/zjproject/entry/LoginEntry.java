@@ -1,7 +1,11 @@
 package com.cndatacom.zjproject.entry;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.util.EncryptUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 /**
  * 登录信息
@@ -39,12 +43,12 @@ public class LoginEntry {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfoEntry userInfo) {
+    public void setUserInfo(final UserInfoEntry userInfo) {
         this.userInfo = userInfo;
         if(this.userInfo!=null){
             setLogin(true);
-            SPUtils.getInstance().put("username",userInfo.getUser().getLogonId());
-            SPUtils.getInstance().put("password",userInfo.getUser().getPassword());
+            SPUtils.getInstance().put("username",userInfo.getLogonId());
+            SPUtils.getInstance().put("password",userInfo.getPassword());
         }
     }
 

@@ -2,7 +2,10 @@ package com.cndatacom.zjproject.ui.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputType;
@@ -10,6 +13,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +24,14 @@ import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.base.BaseActivity;
 import com.cndatacom.zjproject.entry.LoginEntry;
+import com.cndatacom.zjproject.entry.Result;
 import com.cndatacom.zjproject.entry.UserInfoEntry;
 import com.cndatacom.zjproject.http.MyRetrofit;
 import com.cndatacom.zjproject.ui.MainActivity;
 import com.cndatacom.zjproject.util.EncryptUtil;
 import com.cndatacom.zjproject.widget.LoadingDialog;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +62,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setImmerse(true);
         setContentView(R.layout.activity_login);
         initView();
-        initData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.RECORD_AUDIO","android.permission.CAMERA"},1);
+        }else{
+            initData();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==1&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            initData();
+        }
     }
 
     private void initData() {
@@ -114,6 +133,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     ivSight.setSelected(false);
                     ivSight.setImageResource(R.mipmap.icon_openeye);
                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    etPassword.setSelection(etPassword.getText().toString().length());
                 } else {
                     ivSight.setSelected(true);
                     ivSight.setImageResource(R.mipmap.icon_closeeye);
@@ -141,22 +161,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login(String username, String password) {
         LoadingDialog.showLoadingDialog(this, "登录中");
         MyRetrofit.getHttpService().login(username, password)
-                .enqueue(new Callback<UserInfoEntry>() {
+                .enqueue(new Callback<Result<UserInfoEntry>>() {
                     @Override
-                    public void onResponse(Call<UserInfoEntry> call, Response<UserInfoEntry> response) {
-                        LoadingDialog.hideProgressDialog();
+                    public void onResponse(Call<Result<UserInfoEntry>> call, Response<Result<UserInfoEntry>> response) {
+
                         if (response.body().getStatus().equals("1")) {
                             //登录成功
-                            LoginEntry.instance().setUserInfo(response.body());
-                            MainActivity.start(LoginActivity.this);
-                            finish();
+                            final UserInfoEntry user = response.body().getBody();
+                            LoginEntry.instance().setUserInfo(response.body().getBody());
+                            EMClient.getInstance().login(user.getLogonId(), user.getPassword()
+                                    , new EMCallBack() {
+                                        @Override
+                                        public void onSuccess() {
+                                            LoadingDialog.hideProgressDialog();
+                                            Log.e("test",user.getLogonId()+"登录成功");
+                                            MainActivity.start(LoginActivity.this);
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onError(int i, String s) {
+                                            LoadingDialog.hideProgressDialog();
+                                            Log.e("test",user.getLogonId()+"登录失败");
+                                        }
+
+                                        @Override
+                                        public void onProgress(int i, String s) {
+
+                                        }
+                                    });
                         } else {
                             showShortToast(response.body().getMsg());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserInfoEntry> call, Throwable t) {
+                    public void onFailure(Call<Result<UserInfoEntry>> call, Throwable t) {
                         t.printStackTrace();
                         LoadingDialog.hideProgressDialog();
                     }

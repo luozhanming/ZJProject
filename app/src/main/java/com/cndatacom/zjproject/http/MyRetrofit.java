@@ -1,5 +1,6 @@
 package com.cndatacom.zjproject.http;
 
+import com.cndatacom.zjproject.common.AppConstant;
 import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
@@ -14,8 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyRetrofit {
 
-    private static final String URL_DEVELOPMENT = "http://192.168.200.92:8099/zjjcyPlatForm/rest/";
-
     private static Retrofit retrofit;
 
     public static Retrofit init(){
@@ -26,7 +25,7 @@ public class MyRetrofit {
                         .build();
                 retrofit = new Retrofit.Builder()
                         .client(client)
-                        .baseUrl(URL_DEVELOPMENT)
+                        .baseUrl(AppConstant.URL_DEVELOPMENT)
                         .addConverterFactory(GsonConverterFactory.create(new Gson()))
                         .build();
             }

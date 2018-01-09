@@ -1,24 +1,29 @@
 package com.cndatacom.zjproject.ui.mine;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.common.CircleBitmapTransformation;
 import com.cndatacom.zjproject.entry.LoginEntry;
+import com.cndatacom.zjproject.entry.Result;
 import com.cndatacom.zjproject.entry.UserInfoEntry;
 import com.cndatacom.zjproject.http.MyRetrofit;
-import com.cndatacom.zjproject.ui.contract.ContractMainFragment;
+import com.cndatacom.zjproject.ui.MainActivity;
 import com.cndatacom.zjproject.widget.LoadingDialog;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +54,7 @@ public class MineMainFragment extends Fragment implements View.OnClickListener {
 
     public static MineMainFragment instance(Bundle bundle) {
         if (sInstance == null) {
-            synchronized (ContractMainFragment.class) {
+            synchronized (MineMainFragment.class) {
                 if (sInstance == null) {
                     sInstance = new MineMainFragment();
                     sInstance.setArguments(bundle);
@@ -74,8 +79,8 @@ public class MineMainFragment extends Fragment implements View.OnClickListener {
 
         viewLogout.setOnClickListener(this);
 
-        tvName.setText(loginEntry.getUserInfo().getUser().getFullName());
-        tvDepartment.setText(loginEntry.getUserInfo().getUser().getParentNames());
+        tvName.setText(loginEntry.getUserInfo().getFullName());
+        tvDepartment.setText(loginEntry.getUserInfo().getParentNames());
         Glide.with(getActivity()).load(R.mipmap.ic_head_default)
                 .asBitmap()
                 .transform(new CircleBitmapTransformation(getActivity()))
@@ -93,21 +98,40 @@ public class MineMainFragment extends Fragment implements View.OnClickListener {
 
     private void logout() {
         LoadingDialog.showLoadingDialog(getActivity(), "退出中..");
-        MyRetrofit.getHttpService().logout(LoginEntry.instance().getUserInfo().getUser().getLogonId())
-                .enqueue(new Callback<UserInfoEntry>() {
+        MyRetrofit.getHttpService().logout(LoginEntry.instance().getUserInfo().getLogonId())
+                .enqueue(new Callback<Result>() {
                     @Override
-                    public void onResponse(Call<UserInfoEntry> call, Response<UserInfoEntry> response) {
-                        LoadingDialog.hideProgressDialog();
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+
                         if (response.body().getStatus().equals("1")) {
-                            LoginEntry.instance().logout();
-                            LoginActivity.start(getActivity());
-                            getActivity().finish();
+
+                            EMClient.getInstance().logout(true, new EMCallBack() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.e("test","退出登录");
+                                    LoadingDialog.hideProgressDialog();
+                                    LoginEntry.instance().logout();
+                                    LoginActivity.start(getActivity());
+                                    getActivity().finish();
+                                }
+
+                                @Override
+                                public void onError(int i, String s) {
+
+                                }
+
+                                @Override
+                                public void onProgress(int i, String s) {
+
+                                }
+                            });
+                        //    ActivityUtils.finishActivity(MainActivity.class);
 
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserInfoEntry> call, Throwable t) {
+                    public void onFailure(Call<Result> call, Throwable t) {
                         t.printStackTrace();
                         LoadingDialog.hideProgressDialog();
                     }
