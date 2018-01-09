@@ -5,7 +5,7 @@
 
     <!--登录页面-->
     <string name="username">用户名</string>
-    <string name="password">密码\u3000</string>
+    <string name="password1">密码\u3000</string>
     <string name="login_commint">登录</string>
     <string name="forget_password">忘记密码？</string>
     <!--主页-->
