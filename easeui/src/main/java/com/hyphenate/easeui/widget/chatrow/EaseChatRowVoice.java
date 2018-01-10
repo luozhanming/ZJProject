@@ -104,9 +104,9 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     public void startVoicePlayAnimation() {
         if (message.direct() == EMMessage.Direct.RECEIVE) {
-            voiceImageView.setImageResource(R.drawable.ease_chat_voice_call_receive);
+            voiceImageView.setImageResource(R.drawable.voice_from_icon);
         } else {
-            voiceImageView.setImageResource(R.drawable.ease_chat_voice_call_self);
+            voiceImageView.setImageResource(R.drawable.voice_to_icon);
         }
         voiceAnimation = (AnimationDrawable) voiceImageView.getDrawable();
         voiceAnimation.start();

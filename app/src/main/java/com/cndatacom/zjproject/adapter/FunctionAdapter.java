@@ -59,10 +59,10 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
                             toOAApp();
                             break;
                         case "云办事":
-                            WebActivity.start(mContext, "云办事", "http://tbsmhgl.zjportal.net:8096/portal/sys/main!client.action?weixinFlag=true");
+                            WebActivity.start(mContext, "云办事", "http://bsxt.tzjjcy.zjportal.net/");
                             break;
                         case "云订餐":
-                            WebActivity.start(mContext, "云订餐", "http://ydctest.zjportal.net/html5/sys/login/login.action");
+                            WebActivity.start(mContext, "云订餐", "http://ydc.tzjjcy.zjportal.net/");
                             break;
                     }
                 }

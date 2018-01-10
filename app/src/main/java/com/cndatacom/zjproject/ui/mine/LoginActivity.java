@@ -182,7 +182,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         @Override
                                         public void onError(int i, String s) {
                                             LoadingDialog.hideProgressDialog();
-                                            Log.e("test",user.getLogonId()+"登录失败");
+                                            Log.e("test",user.getLogonId()+"登录失败"+s);
                                         }
 
                                         @Override
@@ -191,6 +191,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         }
                                     });
                         } else {
+                            LoadingDialog.hideProgressDialog();
                             showShortToast(response.body().getMsg());
                         }
                     }

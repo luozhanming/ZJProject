@@ -25,7 +25,7 @@ public class MyRetrofit {
                         .build();
                 retrofit = new Retrofit.Builder()
                         .client(client)
-                        .baseUrl(AppConstant.URL_DEVELOPMENT)
+                        .baseUrl(AppConstant.URL_PRODUCT_PUB)
                         .addConverterFactory(GsonConverterFactory.create(new Gson()))
                         .build();
             }

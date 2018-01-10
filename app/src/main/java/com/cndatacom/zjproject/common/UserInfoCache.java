@@ -25,11 +25,11 @@ public class UserInfoCache {
     private static UserInfoCache sInstance;
 
     private Map<String, UserInfoEntry> cache;  //id key
-    private Map<String, UserInfoEntry> cache1;  //中文名key
+   // private Map<String, UserInfoEntry> cache1;  //中文名key
 
     private UserInfoCache() {
         cache = new HashMap<>();
-        cache1 = new HashMap<>();
+   //     cache1 = new HashMap<>();
     }
 
     public static final UserInfoCache getInstance() {
@@ -65,7 +65,7 @@ public class UserInfoCache {
                                 int size = body.size();
                                 for (int i = 0; i < size; i++) {
                                     cache.put(body.get(i).getLogonId(), body.get(i));
-                                    cache1.put(body.get(i).getFullName(),body.get(i));
+                        //            cache1.put(body.get(i).getFullName(),body.get(i));
                                 }
                             }
                         }
@@ -84,7 +84,6 @@ public class UserInfoCache {
             }
         });
 
-
     }
 
     public UserInfoEntry getUserInfo(String key) {
@@ -95,10 +94,10 @@ public class UserInfoCache {
     }
 
 
-    public UserInfoEntry getUserInfo1(String key) {
-        if (cache1.containsKey(key)) {
-            return cache1.get(key);
-        } else
-            return null;
-    }
+//    public UserInfoEntry getUserInfo1(String key) {
+//        if (cache1.containsKey(key)) {
+//            return cache1.get(key);
+//        } else
+//            return null;
+//    }
 }
