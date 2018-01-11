@@ -29,6 +29,7 @@
     <ListView
         android:id="@+id/groupList"
         android:layout_width="match_parent"
+        android:dividerHeight="1px"
         android:layout_height="match_parent"></ListView>
 
 

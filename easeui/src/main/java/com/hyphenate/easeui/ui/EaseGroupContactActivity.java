@@ -62,6 +62,12 @@ public class EaseGroupContactActivity extends EaseBaseActivity {
 
     private void initView() {
         groupListView = (ListView) findViewById(R.id.groupList);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mAdapter = new GroupListAdapter(this,new ArrayList<EaseGroup>());
         groupListView.setAdapter(mAdapter);
         groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

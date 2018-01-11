@@ -57,7 +57,7 @@ public class GroupListAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        Glide.with(mContext).load(group.getImgUrl()).into(holder.avatar);
+        Glide.with(mContext).load(R.drawable.ease_group_icon).into(holder.avatar);
         holder.name.setText(group.getGroupName());
         return convertView;
     }
