@@ -25,6 +25,7 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
@@ -131,14 +132,18 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             @Override
             public void onListItemClicked(EaseUser user) {
                 String username = user.getUsername();
-                ChatActivity.start(MainActivity.this, username);
+                ChatActivity.start(MainActivity.this, username, EaseConstant.CHATTYPE_SINGLE);
             }
         });
         conversationFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
             @Override
             public void onListItemClicked(EMConversation conversation) {
                 String from = conversation.conversationId();
-                ChatActivity.start(MainActivity.this, from);
+                if(conversation.isGroup()){
+                    ChatActivity.start(MainActivity.this, from, EaseConstant.CHATTYPE_GROUP);
+                }else{
+                    ChatActivity.start(MainActivity.this, from,EaseConstant.CHATTYPE_SINGLE);
+                }
             }
         });
     }

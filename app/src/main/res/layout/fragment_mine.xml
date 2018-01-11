@@ -29,11 +29,12 @@
                 android:src="@mipmap/ic_code"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:layout_marginRight="13dp" />
+                />
 
             <ImageView
                 android:src="@mipmap/ic_search"
                 android:layout_width="26dp"
+                android:visibility="gone"
                 android:layout_height="26dp" />
         </LinearLayout>
     </FrameLayout>

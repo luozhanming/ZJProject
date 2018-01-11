@@ -16,16 +16,40 @@
         android:id="@+id/search_bar_view"
         layout="@layout/ease_search_bar_with_padding" />
 
+    <LinearLayout
+        android:id="@+id/item_group"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="43dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="43dp"
+            android:src="@drawable/ic_group"
+            android:layout_marginLeft="11dp" />
+
+        <TextView
+            android:textSize="16sp"
+            android:text="我的群组"
+            android:layout_gravity="center"
+            android:layout_marginLeft="11dp"
+            android:textColor="#8C8C8C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.hyphenate.easeui.widget.EaseContactList
             android:id="@+id/contact_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-            <!-- hyphenate:ctsListInitialLetterBg="#abc" -->
+        <!-- hyphenate:ctsListInitialLetterBg="#abc" -->
 
     </FrameLayout>
 

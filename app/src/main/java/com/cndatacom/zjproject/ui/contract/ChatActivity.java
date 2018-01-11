@@ -19,9 +19,10 @@ public class ChatActivity extends BaseActivity {
     EaseChatFragment chatFragment;
 
 
-    public static void start(Context context, String toUser) {
+    public static void start(Context context, String toUser, int type) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(EaseConstant.EXTRA_USER_ID, toUser);
+        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE,type);
         context.startActivity(intent);
     }
 

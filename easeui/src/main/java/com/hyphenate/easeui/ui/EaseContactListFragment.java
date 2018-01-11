@@ -14,6 +14,7 @@
 package com.hyphenate.easeui.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -37,6 +38,7 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.model.EaseGroup;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseContactList;
 import com.hyphenate.exceptions.HyphenateException;
@@ -66,6 +68,7 @@ public class EaseContactListFragment extends EaseBaseFragment {
     protected EaseContactList contactListLayout;
     protected boolean isConflict;
     protected FrameLayout contentContainer;
+    protected View itemGroup;
     
     private Map<String, EaseUser> contactsMap;
 
@@ -89,6 +92,15 @@ public class EaseContactListFragment extends EaseBaseFragment {
         
         contactListLayout = (EaseContactList) getView().findViewById(R.id.contact_list);        
         listView = contactListLayout.getListView();
+
+        itemGroup = getView().findViewById(R.id.item_group);
+        itemGroup.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EaseGroupContactActivity.class);
+                startActivity(intent);
+            }
+        });
         
         //search
         query = (EditText) getView().findViewById(R.id.query);

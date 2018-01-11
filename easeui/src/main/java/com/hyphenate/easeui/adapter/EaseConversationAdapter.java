@@ -162,8 +162,17 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if (cvsListHelper != null) {
                 content = cvsListHelper.onSetItemSecondaryText(lastMessage);
             }
-            holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
-                    BufferType.SPANNABLE);
+
+            String from = lastMessage.getFrom();
+            EaseUser userInfo = EaseUserUtils.getUserInfo(from);
+            if (from.equals(EMClient.getInstance().getCurrentUser())) {
+                holder.message.setText("我:" + EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
+                        BufferType.SPANNABLE);
+            }else{
+                holder.message.setText(userInfo.getNick() + ":" + EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
+                        BufferType.SPANNABLE);
+            }
+
             if (content != null) {
                 holder.message.setText(content);
             }
@@ -306,7 +315,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             for (int i = 0; i < size; i++) {
                 if (tempList.contains(newValues.get(i).conversationId())) {
                     multiPos.add(i);
-                }else{
+                } else {
                     tempList.add(newValues.get(i).conversationId());
                 }
             }
