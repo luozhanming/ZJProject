@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -98,6 +99,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             view.loadUrl(url);
             return true;
         }
+
+
 
         public void onPageFinished(WebView view, String url) {
             /**网站加载完毕，隐藏progressBar*/

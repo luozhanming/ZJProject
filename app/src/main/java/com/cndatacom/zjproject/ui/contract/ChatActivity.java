@@ -2,8 +2,11 @@ package com.cndatacom.zjproject.ui.contract;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.cndatacom.zjproject.base.BaseActivity;
 import com.hyphenate.chat.EMClient;

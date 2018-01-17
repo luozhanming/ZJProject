@@ -109,8 +109,23 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        UserInfoCache.getInstance().fetchInfo();   //拉取所有关联用户
+        initCache();  //拉取所有关联用户
         initData();
+    }
+
+    private void initCache() {
+        UserInfoCache.getInstance().setCacheLoadedListener(new UserInfoCache.CacheLoadedListener() {
+            @Override
+            public void onCacheLoaded() {
+                if(conversationFragment.isVisible()){
+                    contactFragment.refresh();
+                }
+                if(contactFragment.isVisible()){
+                    contactFragment.refresh();
+                }
+            }
+        });
+        UserInfoCache.getInstance().fetchInfo();
     }
 
     @Override

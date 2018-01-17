@@ -98,6 +98,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.msgState = convertView.findViewById(R.id.msg_state);
             holder.list_itease_layout = (RelativeLayout) convertView.findViewById(R.id.list_itease_layout);
             holder.motioned = (TextView) convertView.findViewById(R.id.mentioned);
+            holder.isGroup = (TextView) convertView.findViewById(R.id.isGroup);
             convertView.setTag(holder);
         }
         holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
@@ -110,6 +111,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
 
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
+            holder.isGroup.setVisibility(View.VISIBLE);
             if (EaseAtMessageHelper.get().hasAtMeMsg(groupId)) {
                 holder.motioned.setVisibility(View.VISIBLE);
             } else {
@@ -133,6 +135,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             EaseUserUtils.setUserNick(username, holder.name);
             //     }
             holder.motioned.setVisibility(View.GONE);
+            holder.isGroup.setVisibility(View.GONE);
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
@@ -375,6 +378,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
          */
         RelativeLayout list_itease_layout;
         TextView motioned;
+        TextView isGroup;
     }
 }
 

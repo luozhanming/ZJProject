@@ -11,9 +11,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- *  1.login()登录接口
- *  2.logout()退出登录接口
- *  3.getUserListByIdOrName()通过id查用户信息
+ *  1.login()登录接口<br>
+ *  2.logout()退出登录接口<br>
+ *  3.getUserListByIdOrName()通过id查用户信息<br>
  * Created by cdc4512 on 2018/1/4.
  */
 

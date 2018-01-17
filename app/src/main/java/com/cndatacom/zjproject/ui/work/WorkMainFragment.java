@@ -7,7 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -65,14 +68,14 @@ public class WorkMainFragment extends Fragment {
         tvHasRead = (TextView) view.findViewById(R.id.tv_haveRead);
         rvFunction = (RecyclerView) view.findViewById(R.id.rv_functions);
 
-        rvFunction.setLayoutManager(new GridLayoutManager(getActivity(),4, LinearLayoutManager.VERTICAL,false));
+        rvFunction.setLayoutManager(new GridLayoutManager(getActivity(), 4, LinearLayoutManager.VERTICAL, false));
         List<FunctionEntry> functions = new ArrayList<>();
         mFunctionAdapter = new FunctionAdapter(getActivity(), functions);
         rvFunction.addItemDecoration(new GridItemDecoration(1, Color.parseColor("#AAAAAA")));
         rvFunction.setAdapter(mFunctionAdapter);
-
         initData();
     }
+
 
     private void initData() {
         List<FunctionEntry> functions = new ArrayList<>();
@@ -105,8 +108,8 @@ public class WorkMainFragment extends Fragment {
 //        functions.add(entry6);
 //        functions.add(entry7);
         mFunctionAdapter.addFunctions(functions);
-    }
 
+    }
 
 
 }

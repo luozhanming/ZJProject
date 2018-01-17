@@ -3,8 +3,10 @@ package com.cndatacom.zjproject.http;
 import com.cndatacom.zjproject.common.AppConstant;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,22 +19,25 @@ public class MyRetrofit {
 
     private static Retrofit retrofit;
 
-    public static Retrofit init(){
-            if(retrofit==null){
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .addNetworkInterceptor(new HttpRequestInterceptor())
-                        .connectTimeout(5000, TimeUnit.MILLISECONDS)
-                        .build();
-                retrofit = new Retrofit.Builder()
-                        .client(client)
-                        .baseUrl(AppConstant.URL_PRODUCT_PUB)
-                        .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                        .build();
-            }
+    public static Retrofit init() {
+        if (retrofit == null) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addNetworkInterceptor(new HttpRequestInterceptor())
+                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                    .build();
+            retrofit = new Retrofit.Builder()
+                    .client(client)
+                    .baseUrl(AppConstant.URL_PRODUCT_PUB)
+                    .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                    .build();
+        }
         return retrofit;
     }
 
-    public static HttpService getHttpService(){
+    public static HttpService getHttpService() {
+        if (retrofit == null) {
+            init();
+        }
         return retrofit.create(HttpService.class);
     }
 

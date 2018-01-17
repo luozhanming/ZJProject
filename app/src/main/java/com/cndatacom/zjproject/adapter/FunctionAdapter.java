@@ -2,6 +2,7 @@ package com.cndatacom.zjproject.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
     private Context mContext;
     private List<FunctionEntry> functions;
 
-    public FunctionAdapter(Context mContext, List<FunctionEntry> functions) {
+    public FunctionAdapter(Context mContext, final List<FunctionEntry> functions) {
         this.mContext = mContext;
         this.functions = functions;
     }

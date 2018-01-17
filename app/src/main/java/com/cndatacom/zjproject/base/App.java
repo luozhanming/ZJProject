@@ -22,7 +22,6 @@ public class App extends Application {
         MyRetrofit.init();
         LoginEntry.instance();
         EMChatInit();
-
     }
 
     private void EMChatInit() {

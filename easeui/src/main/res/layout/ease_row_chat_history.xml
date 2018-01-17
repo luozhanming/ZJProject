@@ -47,6 +47,23 @@
         android:textSize="16sp" />
 
     <TextView
+        android:visibility="gone"
+        android:id="@+id/isGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="部门"
+        android:background="@drawable/bg_rounded1"
+        android:layout_alignBottom="@id/name"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/name"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

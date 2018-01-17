@@ -27,6 +27,12 @@ public class UserInfoCache {
     private Map<String, UserInfoEntry> cache;  //id key
    // private Map<String, UserInfoEntry> cache1;  //中文名key
 
+    public interface CacheLoadedListener{
+        void onCacheLoaded();
+    }
+
+    private CacheLoadedListener listener;
+
     private UserInfoCache() {
         cache = new HashMap<>();
    //     cache1 = new HashMap<>();
@@ -67,6 +73,9 @@ public class UserInfoCache {
                                     cache.put(body.get(i).getLogonId(), body.get(i));
                         //            cache1.put(body.get(i).getFullName(),body.get(i));
                                 }
+                                if(listener!=null){
+                                    listener.onCacheLoaded();
+                                }
                             }
                         }
 
@@ -91,6 +100,11 @@ public class UserInfoCache {
             return cache.get(key);
         } else
             return null;
+    }
+
+
+    public void setCacheLoadedListener(CacheLoadedListener listener){
+        this.listener = listener;
     }
 
 
