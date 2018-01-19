@@ -33,7 +33,7 @@ public class WorkMainFragment extends Fragment {
 
     private static WorkMainFragment sInstance = null;
 
-    ImageView ivSearch;
+  //  ImageView ivSearch;
     TextView tvBacklog, tvReadLater, tvDone, tvHasRead;
     RecyclerView rvFunction;
 
@@ -61,7 +61,7 @@ public class WorkMainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+     //   ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         tvBacklog = (TextView) view.findViewById(R.id.tv_backlog);
         tvReadLater = (TextView) view.findViewById(R.id.tv_readLater);
         tvDone = (TextView) view.findViewById(R.id.tv_done);

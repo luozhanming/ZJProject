@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -15,7 +16,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://raw.githubusercontent.com/HyphenateInc/Hyphenate-SDK-Android/master/repository" }
+        maven {
+            url "https://raw.githubusercontent.com/HyphenateInc/Hyphenate-SDK-Android/master/repository"
+        }
+//        maven {
+//            url 'https://dl.bintray.com/459557210/androidlibrary'
+//        }
     }
 }
 

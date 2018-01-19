@@ -1,5 +1,6 @@
 package com.cndatacom.zjproject.ui.mine;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,11 +15,13 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.R;
@@ -32,6 +35,7 @@ import com.cndatacom.zjproject.util.EncryptUtil;
 import com.cndatacom.zjproject.widget.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.luozm.captcha.Captcha;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,8 +67,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.RECORD_AUDIO","android.permission.CAMERA"},1);
-        }else{
+            requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO", "android.permission.CAMERA"}, 1);
+        } else {
             initData();
         }
     }
@@ -72,7 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==1&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             initData();
         }
     }
@@ -152,9 +156,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     showShortToast("请输入密码");
                     return;
                 }
-                login(username, EncryptUtil.EncryptMD5(password));
+                showCaptchaDialog();
+//                login(username, EncryptUtil.EncryptMD5(password));
                 break;
         }
+    }
+
+    AlertDialog captchaDialog;
+
+    private void showCaptchaDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_captcha, null);
+        Captcha captcha = (Captcha) view.findViewById(R.id.captcha);
+        captchaDialog = new AlertDialog.Builder(this, R.style.style_dialog_loading)
+                .setView(view)
+                .create();
+        captcha.setCaptchaListener(new Captcha.CaptchaListener() {
+            @Override
+            public void onAccess(long time) {
+                String username = etUserName.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                login(username, EncryptUtil.EncryptMD5(password));
+            }
+
+            @Override
+            public void onFailed() {
+            }
+        });
+        captchaDialog.setCanceledOnTouchOutside(false);
+        captchaDialog.show();
     }
 
 
@@ -174,7 +203,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         @Override
                                         public void onSuccess() {
                                             LoadingDialog.hideProgressDialog();
-                                            Log.e("test",user.getLogonId()+"登录成功");
+                                            if (captchaDialog != null && captchaDialog.isShowing()) {
+                                                captchaDialog.dismiss();
+                                            }
+                                            Log.e("test", user.getLogonId() + "登录成功");
                                             MainActivity.start(LoginActivity.this);
                                             finish();
                                         }
@@ -182,7 +214,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         @Override
                                         public void onError(int i, String s) {
                                             LoadingDialog.hideProgressDialog();
-                                            Log.e("test",user.getLogonId()+"登录失败"+s);
+                                            if (captchaDialog != null && captchaDialog.isShowing()) {
+                                                captchaDialog.dismiss();
+                                            }
+                                            Log.e("test", user.getLogonId() + "登录失败" + s);
                                         }
 
                                         @Override
@@ -191,6 +226,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         }
                                     });
                         } else {
+                            if (captchaDialog != null && captchaDialog.isShowing()) {
+                                captchaDialog.dismiss();
+                            }
                             LoadingDialog.hideProgressDialog();
                             showShortToast(response.body().getMsg());
                         }
