@@ -3,14 +3,16 @@ package com.cndatacom.zjproject.ui.common;
 import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +23,9 @@ import android.widget.Toast;
 
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.base.BaseActivity;
+import com.cndatacom.zjproject.entry.LoginEntry;
+
+import okhttp3.Cookie;
 
 /**
  * Created by cdc4512 on 2018/1/5.
@@ -45,14 +50,27 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         initView();
+        initCookie();
         initWebView();
         initData();
+        //   webView.loadUrl(getIntent().getStringExtra("url"));
+    }
+
+    private void initCookie() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        StringBuilder cookies = new StringBuilder();
+        String m_ssoTokenKey = LoginEntry.instance().getUserInfo().getInfoOut().getM_SSOTokenKey();
+        cookies.append(String.format("__PLATFORM_SSOToken__=%s",m_ssoTokenKey));
+        cookieManager.setCookie(getIntent().getStringExtra("url"),cookies.toString());
+        CookieSyncManager.getInstance().sync();
+
     }
 
     private void initData() {
         mTitle = getIntent().getStringExtra("title");
         ((TextView) findViewById(R.id.title)).setText(mTitle);
         webView.loadUrl(getIntent().getStringExtra("url"));
+
     }
 
     private void initView() {
@@ -65,7 +83,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initWebView() {
-// 设置网路兼容模式
+        // 设置网路兼容模式
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true); // 设置支持javascript脚本
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //自动打开js窗口，默认是false
@@ -78,6 +96,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         webSettings.setDomStorageEnabled(true);//DOM Storage
         webSettings.setUseWideViewPort(true);// 加载进来的页面自适应手机屏幕
         webSettings.setLoadWithOverviewMode(true); //和setUseWideViewPort(true)一起解决网页自适应问题
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webView.setWebChromeClient(new MyWebChromeClient());
         webView.setWebViewClient(new MyWebViewClient());
     }
@@ -99,7 +118,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             view.loadUrl(url);
             return true;
         }
-
 
 
         public void onPageFinished(WebView view, String url) {
@@ -127,6 +145,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             //handleMessage(Message msg); 其他处理
             //Toast.makeText(WebViewActivity.this, "出现了sslError，只能接受证书才能正常访问", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     private class MyWebChromeClient extends WebChromeClient {
@@ -139,7 +159,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             } else {
                 progressBar.setVisibility(View.VISIBLE);
             }
+
+
+
         }
+
+
+
+
+
+
     }
 
     /**

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PathMeasure;
 import android.util.AttributeSet;
 
 /**
@@ -38,7 +39,7 @@ public class BadgeRadioButton extends android.support.v7.widget.AppCompatRadioBu
             paint.setColor(Color.RED);
             canvas.drawCircle(width / 2 + 36, height / 2 - 64, 30, paint);
             paint.setColor(Color.WHITE);
-            canvas.drawText(num + "", width / 2 + 36, height / 2 - 56, paint);
+            canvas.drawText(num + "", width / 2 + 36, height / 2 - 64 + 13, paint);
         }
     }
 
@@ -50,7 +51,6 @@ public class BadgeRadioButton extends android.support.v7.widget.AppCompatRadioBu
 
     public int getBadgeNum() {
         return this.num;
-
     }
 
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.bumptech.glide.Glide;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.base.BaseActivity;
 import com.cndatacom.zjproject.common.UserInfoCache;

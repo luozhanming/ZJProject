@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/item_daiban"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -51,6 +52,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item_daiyue"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -73,6 +75,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item_yiban"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -95,6 +98,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item_yiyue"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"

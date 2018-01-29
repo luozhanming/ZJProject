@@ -33,6 +33,5 @@ public class DownloadUtil {
         req.setDescription(description);
         req.setMimeType("application/vnd.android.package-archive");
         return downloadManager.enqueue(req);
-
     }
 }

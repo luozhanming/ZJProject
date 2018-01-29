@@ -1,6 +1,7 @@
 package com.cndatacom.zjproject.entry;
 
 import android.util.Log;
+import android.webkit.CookieManager;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.util.EncryptUtil;
@@ -48,7 +49,7 @@ public class LoginEntry {
         if(this.userInfo!=null){
             setLogin(true);
             SPUtils.getInstance().put("username",userInfo.getLogonId());
-            SPUtils.getInstance().put("password",userInfo.getPassword());
+            SPUtils.getInstance().put("password","jcy@2018");
         }
     }
 
@@ -57,5 +58,7 @@ public class LoginEntry {
         setLogin(false);
         SPUtils.getInstance().put("username","");
         SPUtils.getInstance().put("password","");
+        CookieManager cm = CookieManager.getInstance();
+        cm.removeAllCookie();
     }
 }

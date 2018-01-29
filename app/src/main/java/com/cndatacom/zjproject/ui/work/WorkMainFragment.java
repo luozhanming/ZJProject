@@ -7,35 +7,48 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.adapter.FunctionAdapter;
+import com.cndatacom.zjproject.common.AppConstant;
 import com.cndatacom.zjproject.common.GridItemDecoration;
 import com.cndatacom.zjproject.entry.FunctionEntry;
+import com.cndatacom.zjproject.entry.LoginEntry;
+import com.cndatacom.zjproject.entry.TaskEntry;
+import com.cndatacom.zjproject.entry.TasksEntry;
+import com.cndatacom.zjproject.http.MyRetrofit;
+import com.cndatacom.zjproject.ui.common.WebActivity;
+import com.cndatacom.zjproject.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 描述：主页工作界面
  * Created by zhanming on 2018/1/1.
  */
 
-public class WorkMainFragment extends Fragment {
+public class WorkMainFragment extends Fragment implements View.OnClickListener {
 
     private static WorkMainFragment sInstance = null;
 
-  //  ImageView ivSearch;
+    //  ImageView ivSearch;
     TextView tvBacklog, tvReadLater, tvDone, tvHasRead;
     RecyclerView rvFunction;
+    View item_daiban, item_daiyue, item_yiban, item_yiyue;
+
+    List<TaskEntry> dbList;
+    List<TaskEntry> dyList;
+    List<TaskEntry> ybList;
+    List<TaskEntry> yyList;
 
     private FunctionAdapter mFunctionAdapter;
 
@@ -61,12 +74,20 @@ public class WorkMainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-     //   ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+        //   ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         tvBacklog = (TextView) view.findViewById(R.id.tv_backlog);
         tvReadLater = (TextView) view.findViewById(R.id.tv_readLater);
         tvDone = (TextView) view.findViewById(R.id.tv_done);
         tvHasRead = (TextView) view.findViewById(R.id.tv_haveRead);
         rvFunction = (RecyclerView) view.findViewById(R.id.rv_functions);
+        item_daiban = view.findViewById(R.id.item_daiban);
+        item_daiyue = view.findViewById(R.id.item_daiyue);
+        item_yiban = view.findViewById(R.id.item_yiban);
+        item_yiyue = view.findViewById(R.id.item_yiyue);
+        item_daiban.setOnClickListener(this);
+        item_daiyue.setOnClickListener(this);
+        item_yiban.setOnClickListener(this);
+        item_yiyue.setOnClickListener(this);
 
         rvFunction.setLayoutManager(new GridLayoutManager(getActivity(), 4, LinearLayoutManager.VERTICAL, false));
         List<FunctionEntry> functions = new ArrayList<>();
@@ -78,6 +99,7 @@ public class WorkMainFragment extends Fragment {
 
 
     private void initData() {
+        fetchTask();
         List<FunctionEntry> functions = new ArrayList<>();
         FunctionEntry entry1 = new FunctionEntry();
         entry1.setIcon(R.mipmap.ic_shenpi);
@@ -112,4 +134,50 @@ public class WorkMainFragment extends Fragment {
     }
 
 
+    private void fetchTask() {
+        String username = LoginEntry.instance().getUserInfo().getLogonId();
+        String beginDate = Utils.getDate(System.currentTimeMillis() - AppConstant.DAY * 7);
+        String endDate = Utils.getDate(System.currentTimeMillis());
+        MyRetrofit.getHttpService().getTaskList(username, beginDate, endDate)
+                .enqueue(new Callback<TasksEntry>() {
+                    @Override
+                    public void onResponse(Call<TasksEntry> call, Response<TasksEntry> response) {
+                        TasksEntry body = response.body();
+                        if (body.getStatus().equals("1")) {
+                            dbList = body.getDbList();
+                            dyList = body.getDyList();
+                            ybList = body.getYbList();
+                            yyList = body.getYyList();
+                            tvBacklog.setText(dbList.size() + "");
+                            tvReadLater.setText(dyList.size() + "");
+                            tvDone.setText(ybList.size() + "");
+                            tvHasRead.setText(yyList.size() + "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TasksEntry> call, Throwable t) {
+
+                    }
+                });
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.item_daiban:
+                WebActivity.start(getActivity(),"云办事","http://bsxt.tzjjcy.zjportal.net/");
+                break;
+            case R.id.item_daiyue:
+                WebActivity.start(getActivity(),"云办事","http://bsxt.tzjjcy.zjportal.net/");
+                break;
+            case R.id.item_yiban:
+                WebActivity.start(getActivity(),"云办事","http://bsxt.tzjjcy.zjportal.net/");
+                break;
+            case R.id.item_yiyue:
+                WebActivity.start(getActivity(),"云办事","http://bsxt.tzjjcy.zjportal.net/");
+                break;
+        }
+    }
 }

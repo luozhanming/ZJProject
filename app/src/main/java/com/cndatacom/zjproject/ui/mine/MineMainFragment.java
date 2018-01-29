@@ -1,7 +1,6 @@
 package com.cndatacom.zjproject.ui.mine;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.common.CircleBitmapTransformation;
 import com.cndatacom.zjproject.entry.LoginEntry;
 import com.cndatacom.zjproject.entry.Result;
-import com.cndatacom.zjproject.entry.UserInfoEntry;
 import com.cndatacom.zjproject.http.MyRetrofit;
-import com.cndatacom.zjproject.ui.MainActivity;
 import com.cndatacom.zjproject.widget.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -81,8 +77,9 @@ public class MineMainFragment extends Fragment implements View.OnClickListener {
 
         tvName.setText(loginEntry.getUserInfo().getFullName());
         tvDepartment.setText(loginEntry.getUserInfo().getParentNames());
-        Glide.with(getActivity()).load(R.mipmap.ic_head_default)
+        Glide.with(getActivity()).load(loginEntry.getUserInfo().getPhoto())
                 .asBitmap()
+                .placeholder(R.mipmap.ic_head_default)
                 .transform(new CircleBitmapTransformation(getActivity()))
                 .into(ivHead);
     }

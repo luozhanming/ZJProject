@@ -63,7 +63,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
                             WebActivity.start(mContext, "云办事", "http://bsxt.tzjjcy.zjportal.net/");
                             break;
                         case "云订餐":
-                            WebActivity.start(mContext, "云订餐", "http://ydc.tzjjcy.zjportal.net/");
+                            WebActivity.start(mContext, "云订餐", "http://ydc.tzjjcy.zjportal.net/sys/portal/sso/login.action");
                             break;
                     }
                 }

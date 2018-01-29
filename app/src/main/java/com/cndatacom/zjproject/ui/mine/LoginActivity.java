@@ -152,7 +152,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     showShortToast("请输入用户名");
                     return;
                 }
-                if (TextUtils.isEmpty(etPassword.getText().toString().trim())) {
+                if (TextUtils.isEmpty(password)) {
                     showShortToast("请输入密码");
                     return;
                 }
@@ -175,7 +175,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onAccess(long time) {
                 String username = etUserName.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
-                login(username, EncryptUtil.EncryptMD5(password));
+          //      login(username, EncryptUtil.EncryptMD5(password));
+                login(username, password);
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.cndatacom.zjproject.http;
 
 import com.cndatacom.zjproject.entry.Result;
+import com.cndatacom.zjproject.entry.TasksEntry;
 import com.cndatacom.zjproject.entry.UserInfoEntry;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public interface HttpService {
     @POST("user/getUserListByIdOrName")
     @FormUrlEncoded
     Call<Result<List<UserInfoEntry>>> getUserListByIdOrName(@Field("logonId") String id);
+
+    @POST("taskController/getTaskList")
+    @FormUrlEncoded
+    Call<TasksEntry> getTaskList(@Field("userName") String username, @Field("beginDate") String begin, @Field("endDate") String end);
 
 
 
