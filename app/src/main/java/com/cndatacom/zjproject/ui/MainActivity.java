@@ -12,7 +12,6 @@ import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.bumptech.glide.Glide;
 import com.cndatacom.zjproject.R;
 import com.cndatacom.zjproject.base.BaseActivity;
 import com.cndatacom.zjproject.common.UserInfoCache;
@@ -57,7 +56,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 @Override
                 public void run() {
                     messageRadiobutton.setBadgeNum(messageRadiobutton.getBadgeNum() + messages.size());
-                    if(conversationFragment.isVisible()){
+                    if (conversationFragment.isVisible()) {
                         conversationFragment.refresh();
                     }
                 }
@@ -68,7 +67,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
             //收到透传消息
-
         }
 
         @Override
@@ -108,20 +106,43 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         initView();
         initCache();  //拉取所有关联用户
         initData();
+//        getWindow().getDecorView().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Animator animator = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                    View root = getWindow().getDecorView();
+//                    int width = root.getWidth();
+//                    int height = root.getHeight();
+//                    animator = ViewAnimationUtils.createCircularReveal(getWindow().getDecorView(), width/2, height/2, 0, height);
+//                    animator.setDuration(800);
+//                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                    animator.start();
+//                }
+//            }
+//        });
+
     }
+
+    @Override
+    public boolean isImmerse() {
+        return false;
+    }
+
 
     private void initCache() {
         UserInfoCache.getInstance().setCacheLoadedListener(new UserInfoCache.CacheLoadedListener() {
             @Override
             public void onCacheLoaded() {
-                if(conversationFragment.isVisible()){
+                if (conversationFragment.isVisible()) {
                     contactFragment.refresh();
                 }
-                if(contactFragment.isVisible()){
+                if (contactFragment.isVisible()) {
                     contactFragment.refresh();
                 }
             }
@@ -155,10 +176,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             @Override
             public void onListItemClicked(EMConversation conversation) {
                 String from = conversation.conversationId();
-                if(conversation.isGroup()){
+                if (conversation.isGroup()) {
                     ChatActivity.start(MainActivity.this, from, EaseConstant.CHATTYPE_GROUP);
-                }else{
-                    ChatActivity.start(MainActivity.this, from,EaseConstant.CHATTYPE_SINGLE);
+                } else {
+                    ChatActivity.start(MainActivity.this, from, EaseConstant.CHATTYPE_SINGLE);
                 }
             }
         });
@@ -178,7 +199,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        Log.e("test", "accept: "+s );
+                        Log.e("test", "accept: " + s);
                         bindContact();
                     }
                 });
@@ -203,9 +224,23 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
             @Override
             public void onError(int i, String s) {
-                Log.e("Test", "onError: "+s);
+                Log.e("Test", "onError: " + s);
             }
         });
+    }
+
+    static class EaseUserProfileProviderImpl implements EaseUI.EaseUserProfileProvider{
+
+        @Override
+        public EaseUser getUser(String username) {
+            EaseUser user = new EaseUser(username);
+            UserInfoEntry userInfo = UserInfoCache.getInstance().getUserInfo(username);
+            if (userInfo != null) {
+                user.setAvatar(userInfo.getPhoto());
+                user.setNickname(userInfo.getFullName());
+            }
+            return user;
+        }
     }
 
     /**
@@ -213,18 +248,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
      */
     private void bindEMAvatarAndName() {
         EaseUI easeUI = EaseUI.getInstance();
-        easeUI.setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
-            @Override
-            public EaseUser getUser(String username) {
-                EaseUser user = new EaseUser(username);
-                UserInfoEntry userInfo = UserInfoCache.getInstance().getUserInfo(username);
-                if (userInfo != null) {
-                    user.setAvatar(userInfo.getPhoto());
-                    user.setNickname(userInfo.getFullName());
-                }
-                return user;
-            }
-        });
+        easeUI.setUserProfileProvider(new EaseUserProfileProviderImpl());
     }
 
     @Override
@@ -262,7 +286,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
 
-    class ApkInstallReceiver extends BroadcastReceiver {
+    static class ApkInstallReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

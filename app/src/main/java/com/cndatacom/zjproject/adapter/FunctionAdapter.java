@@ -89,6 +89,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.VH> {
         dialog.setPositiveButton("确定", new CommonDialog.CommonDialogInterface() {
             @Override
             public boolean onClick() {
+                //.../Download/oa.apk
                 String apkPath = mContext.getExternalFilesDir(null).getPath() + "/Download/oa.apk";
                 if (FileUtils.isFileExists(apkPath)) {
                     AppUtils.installApp(apkPath, "com.cndatacom.zjproject.fileprovider");

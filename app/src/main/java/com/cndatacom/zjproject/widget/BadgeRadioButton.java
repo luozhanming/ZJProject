@@ -1,6 +1,7 @@
 package com.cndatacom.zjproject.widget;
 
 import android.content.Context;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -41,6 +42,7 @@ public class BadgeRadioButton extends android.support.v7.widget.AppCompatRadioBu
             paint.setColor(Color.WHITE);
             canvas.drawText(num + "", width / 2 + 36, height / 2 - 64 + 13, paint);
         }
+
     }
 
 

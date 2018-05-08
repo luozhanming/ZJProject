@@ -3,10 +3,9 @@ package com.cndatacom.zjproject.http;
 import com.cndatacom.zjproject.common.AppConstant;
 import com.google.gson.Gson;
 
-import java.io.File;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,10 +18,15 @@ public class MyRetrofit {
 
     private static Retrofit retrofit;
 
+    static {
+        Executors.newCachedThreadPool();
+
+    }
+
     public static Retrofit init() {
         if (retrofit == null) {
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addNetworkInterceptor(new HttpRequestInterceptor())
+                    .addNetworkInterceptor(new LoggerInterceptor())
                     .connectTimeout(5000, TimeUnit.MILLISECONDS)
                     .build();
             retrofit = new Retrofit.Builder()

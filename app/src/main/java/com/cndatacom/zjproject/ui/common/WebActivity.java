@@ -56,6 +56,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         //   webView.loadUrl(getIntent().getStringExtra("url"));
     }
 
+    @Override
+    public boolean isImmerse() {
+        return false;
+    }
+
     private void initCookie() {
         CookieManager cookieManager = CookieManager.getInstance();
         StringBuilder cookies = new StringBuilder();

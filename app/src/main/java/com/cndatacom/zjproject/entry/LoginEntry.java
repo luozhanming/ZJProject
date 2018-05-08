@@ -1,12 +1,10 @@
 package com.cndatacom.zjproject.entry;
 
-import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.webkit.CookieManager;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.cndatacom.zjproject.util.EncryptUtil;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
 
 /**
  * 登录信息
@@ -15,7 +13,7 @@ import com.hyphenate.chat.EMClient;
 
 public class LoginEntry {
 
-    private static LoginEntry sLoginEntry = null;
+    private volatile static LoginEntry sLoginEntry = null;
     private boolean isLogin;   //是否登录
     private UserInfoEntry userInfo = null;
 
@@ -24,9 +22,13 @@ public class LoginEntry {
     }
 
 
-    public synchronized static LoginEntry instance(){
+    public static LoginEntry instance(){
         if(sLoginEntry==null){
-            sLoginEntry = new LoginEntry();
+            synchronized (LoginEntry.class){
+                if(sLoginEntry==null){
+                    sLoginEntry = new LoginEntry();
+                }
+            }
         }
         return sLoginEntry;
     }

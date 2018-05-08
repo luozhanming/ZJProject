@@ -18,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * 用于临时存储关联环信帐号和本地用户信息
  * Created by cdc4512 on 2018/1/9.
  */
 
@@ -47,6 +48,9 @@ public class UserInfoCache {
         return sInstance;
     }
 
+    /**
+     * 拉取关联用户数据
+     * */
     public void fetchInfo() {
         final Set<String> querys = new HashSet<>();
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
@@ -107,11 +111,4 @@ public class UserInfoCache {
         this.listener = listener;
     }
 
-
-//    public UserInfoEntry getUserInfo1(String key) {
-//        if (cache1.containsKey(key)) {
-//            return cache1.get(key);
-//        } else
-//            return null;
-//    }
 }

@@ -40,4 +40,6 @@ dependencies {
     compile 'com.luozm.captcha:captcha:1.0.5'
     //   compile 'com.hyphenate:hyphenate-sdk:3.3.0'
     compile project(':easeui')
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
 }

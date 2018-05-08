@@ -26,7 +26,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(isImmerse()){
+            setImmerse(true);
+        }
     }
+
+    public abstract boolean isImmerse();
 
     protected void setImmerse(boolean immerse) {
         if (immerse) {

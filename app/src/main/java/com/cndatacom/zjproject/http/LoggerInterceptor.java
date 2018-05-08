@@ -18,7 +18,7 @@ import okio.Buffer;
  * Created by cdc4512 on 2018/1/4.
  */
 
-public class HttpRequestInterceptor implements Interceptor {
+public class LoggerInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

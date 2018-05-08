@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -21,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.cndatacom.zjproject.R;
@@ -31,7 +29,6 @@ import com.cndatacom.zjproject.entry.Result;
 import com.cndatacom.zjproject.entry.UserInfoEntry;
 import com.cndatacom.zjproject.http.MyRetrofit;
 import com.cndatacom.zjproject.ui.MainActivity;
-import com.cndatacom.zjproject.util.EncryptUtil;
 import com.cndatacom.zjproject.widget.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -63,7 +60,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setImmerse(true);
         setContentView(R.layout.activity_login);
         initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -71,6 +67,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             initData();
         }
+    }
+
+    @Override
+    public boolean isImmerse() {
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LoadingDialog.hideProgressDialog();
+
     }
 
     @Override
